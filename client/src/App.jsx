@@ -3,12 +3,14 @@ import HomePage from './components/HomePage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import Dashboard from './pages/Dashboard.jsx';
+import ErrorBoundary from './components/ErrorBoundary.jsx';
 
 const requireAuth = (element) => {
   try {
     const u = localStorage.getItem('sb_user');
     if (!u) return <Navigate to="/login" replace />;
-    return element;
+    // wrap protected element in an ErrorBoundary for safer production rendering
+    return <ErrorBoundary>{element}</ErrorBoundary>;
   } catch (e) {
     return <Navigate to="/login" replace />;
   }
