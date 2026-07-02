@@ -31,3 +31,33 @@ export const generateMealPlanFromIngredients = async ({ preferences, days }) => 
   });
   return response.output_text;
 };
+
+export const generateFridgeAnalysis = async (imageUrl) => {
+  const prompt = `You are SmartBite AI.\n\nAnalyze this fridge image: ${imageUrl}\n\nIdentify every visible ingredient with high confidence. Using those ingredients, create one practical recipe that uses as many detected ingredients as possible. If anything essential is missing, list only those missing ingredients. Return ONLY valid JSON using this exact schema:\n\n{\n  "ingredients": [],\n  "recipe": {\n    "title": "",\n    "cookTime": "",\n    "difficulty": "",\n    "servings": "",\n    "ingredients": [],\n    "instructions": [],\n    "missingIngredients": [],\n    "nutrition": "",\n    "reason": ""\n  }\n}\n\nDo not include markdown or extra text.`;
+
+  const response = await anthropic.response.create({
+    model: 'claude-3.5-mini',
+    prompt,
+    max_tokens_to_sample: 1200,
+  });
+
+  let output = response.output_text;
+
+  // attempt to find JSON in the output
+  let jsonText = output.trim();
+  try {
+    const parsed = JSON.parse(jsonText);
+    return parsed;
+  } catch (e) {
+    // try to extract first { ... } block
+    const match = jsonText.match(/\{[\s\S]*\}/m);
+    if (match) {
+      try {
+        return JSON.parse(match[0]);
+      } catch (e2) {
+        throw new Error('Could not parse JSON from AI response');
+      }
+    }
+    throw new Error('Invalid AI response');
+  }
+};

@@ -13,20 +13,38 @@ export default function Dashboard() {
   const [message, setMessage] = useState('');
 
   const handleAnalyze = async ({ file, previewUrl }) => {
+    if (!file) {
+      setMessage('Please choose a photo first');
+      return;
+    }
+
     setLoading(true);
     setMessage('SmartBite AI is analyzing your fridge...');
     setImageUrl(previewUrl);
+
     try {
-      const form = new FormData();
-      form.append('image', file);
-      const res = await fetch('/api/images/analyze', { method: 'POST', body: form });
-      const json = await res.json();
-      if (!json.success) throw new Error(json?.error || 'Analysis failed');
-      const data = json.data || {};
-      setIngredients(data.ingredients || []);
-      setRecipe(data.recipe || null);
+      // upload to Supabase Storage from the client
+      const { data: uploadData, error: uploadError } = await (await import('../utils/supabaseClient')).supabase.storage
+        .from('images')
+        .upload(`fridge-uploads/${Date.now()}-${file.name}`, file, { cacheControl: '3600', upsert: false });
+
+      if (uploadError) throw new Error(uploadError.message || 'Upload failed');
+
+      const { data: publicData } = await (await import('../utils/supabaseClient')).supabase.storage.from('images').getPublicUrl(uploadData.path);
+      const publicUrl = publicData.publicUrl;
+
+      // call backend to analyze the image url
+      const axios = (await import('axios')).default;
+      const resp = await axios.post('/api/analyze/fridge', { imageUrl: publicUrl });
+      if (!resp.data?.success) throw new Error(resp.data?.error || 'Analysis failed');
+
+      const result = resp.data.data || {};
+      setIngredients(result.ingredients || []);
+      setRecipe(result.recipe || null);
+      setMessage('Analysis complete');
     } catch (err) {
-      setMessage(err.message || 'Analysis failed');
+      console.error(err);
+      setMessage(err?.message || 'Analysis failed');
     } finally {
       setLoading(false);
     }

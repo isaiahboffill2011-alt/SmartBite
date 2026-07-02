@@ -4,11 +4,13 @@ import imageRoutes from './images.js';
 import recipeRoutes from './recipes.js';
 import mealPlanRoutes from './mealPlan.js';
 import userRoutes from './user.js';
+import analyzeRoutes from './analyze.js';
 
 const router = express.Router();
 
 router.use('/auth', authRoutes);
 router.use('/images', imageRoutes);
+router.use('/analyze', analyzeRoutes);
 router.use('/recipes', recipeRoutes);
 router.use('/meal-plan', mealPlanRoutes);
 router.use('/user', userRoutes);
