@@ -1,7 +1,7 @@
-# MealMind AI Architecture
+# SmartBite Architecture
 
 ## Overview
-MealMind AI is a full-stack meal planning application with image-based ingredient recognition, recipe generation, grocery list creation, and personalized meal history.
+SmartBite is a full-stack meal planning application with image-based ingredient recognition, recipe generation, grocery list creation, and personalized meal history.
 
 ## Layers
 - **Frontend**: React + Vite, Tailwind CSS, local UI components inspired by shadcn/ui, React Router navigation, Axios for HTTP requests.

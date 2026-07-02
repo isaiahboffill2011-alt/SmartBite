@@ -1,5 +1,5 @@
 {
-  "name": "mealmind-ai",
+  "name": "smartbite",
   "private": true,
   "workspaces": ["server", "client"],
   "scripts": {

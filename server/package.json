@@ -1,5 +1,5 @@
 {
-  "name": "mealmind-ai-server",
+  "name": "smartbite-server",
   "private": true,
   "type": "module",
   "scripts": {

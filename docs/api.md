@@ -1,4 +1,4 @@
-# MealMind AI API Reference
+# SmartBite API Reference
 
 ## Auth
 - `POST /api/auth/register`

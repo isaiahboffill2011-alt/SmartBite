@@ -27,5 +27,5 @@ app.use('/api', apiRoutes);
 app.use(errorHandler);
 
 app.listen(port, () => {
-  console.log(`MealMind AI server listening on port ${port}`);
+  console.log(`SmartBite server listening on port ${port}`);
 });
