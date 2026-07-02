@@ -12,6 +12,7 @@ export default function UploadCard({ onAnalyze, loading }) {
     const url = URL.createObjectURL(f);
     setPreview(url);
     setFile(f);
+    // auto-start analyze on selection is optional; keep manual
   };
 
   const handleDrop = (e) => {
@@ -31,35 +32,37 @@ export default function UploadCard({ onAnalyze, loading }) {
   };
 
   return (
-    <div className="w-full max-w-3xl">
-      <div className="rounded-3xl border border-zinc-100 bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.04)]">
-        <h2 className="text-2xl font-semibold">Upload a Picture of Your Fridge</h2>
-        <p className="mt-2 text-sm text-zinc-600">Take a clear picture of your fridge or pantry and let SmartBite's AI find ingredients and create a recipe.</p>
+    <div className="w-full px-4">
+      <div className="card p-4">
+        <h2 className="text-lg font-semibold">Upload Your Fridge</h2>
+        <p className="mt-2 text-sm text-zinc-600">Take a picture of your fridge or pantry and let SmartBite AI create a recipe using what you already have.</p>
 
         <div
           onDrop={handleDrop}
           onDragOver={(e) => e.preventDefault()}
-          className="mt-6 flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed border-zinc-200 p-8"
+          className="mt-4 flex w-full flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-zinc-200 p-4"
         >
           {!preview ? (
             <>
-              <div className="text-6xl">📷</div>
-              <p className="text-sm text-zinc-600">Drag & drop an image here, or</p>
-              <input ref={fileRef} type="file" accept="image/png,image/jpg,image/jpeg" onChange={handleBrowse} className="hidden" />
-              <button onClick={handleChoose} className="rounded-full bg-yellow-400 px-4 py-2 font-semibold text-black">Choose Image</button>
+              <div className="text-4xl">📸</div>
+              <p className="text-sm text-zinc-600">Use camera or choose from gallery</p>
+              <input ref={fileRef} type="file" accept="image/*" capture="environment" onChange={handleBrowse} className="hidden" />
+              <div className="flex w-full gap-3">
+                <button onClick={handleChoose} className="btn-primary touch-large w-full">Choose Photo</button>
+              </div>
             </>
           ) : (
             <div className="w-full">
-              <img src={preview} alt="preview" className="mx-auto max-h-72 w-auto rounded-lg object-cover" />
+              <img src={preview} alt="preview" className="mx-auto h-60 w-full rounded-lg object-cover" />
             </div>
           )}
         </div>
 
-        <div className="mt-6 flex items-center justify-center gap-4">
+        <div className="mt-4">
           <button
             onClick={handleAnalyze}
             disabled={!file || loading}
-            className="rounded-full bg-yellow-400 px-6 py-3 text-sm font-semibold text-black disabled:opacity-60"
+            className="btn-primary touch-large w-full text-center font-semibold disabled:opacity-60"
           >
             {loading ? 'Analyzing...' : 'Analyze My Fridge'}
           </button>

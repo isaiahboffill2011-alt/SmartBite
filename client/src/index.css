@@ -49,3 +49,32 @@ body {
 .animate-float-slow {
   animation: float 6s ease-in-out infinite;
 }
+
+/* Mobile-first container to emulate native app viewport */
+.mobile-root {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+/* Safe area padding for bottom nav */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+.btn-primary {
+  background: #FACC15;
+  color: #111111;
+}
+
+.touch-large {
+  padding: 14px 18px;
+  border-radius: 9999px;
+}

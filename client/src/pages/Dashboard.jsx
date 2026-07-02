@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import Sidebar from '../components/Sidebar.jsx';
 import UploadCard from '../components/UploadCard.jsx';
 import IngredientTags from '../components/IngredientTags.jsx';
 import RecipeCard from '../components/RecipeCard.jsx';
+import MobileHeader from '../components/MobileHeader.jsx';
+import BottomNav from '../components/BottomNav.jsx';
 
 export default function Dashboard() {
   const [ingredients, setIngredients] = useState([]);
@@ -32,46 +33,42 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-black">
-      <div className="flex">
-        <Sidebar />
+    <div className="mobile-root safe-bottom text-black">
+      <MobileHeader />
 
-        <main className="flex-1 p-8">
-          <h1 className="text-3xl font-semibold">Welcome back!</h1>
-          <p className="mt-2 text-lg text-zinc-600">Ready to cook something with what's already in your fridge?</p>
+      <main className="pt-4 pb-24">
+        <UploadCard onAnalyze={handleAnalyze} loading={loading} />
 
-          <section className="mt-8 grid place-items-center">
-            <UploadCard onAnalyze={handleAnalyze} loading={loading} />
-          </section>
+        {loading && (
+          <div className="mt-4 px-4 text-center text-sm text-zinc-600">{message}</div>
+        )}
 
-          {loading && (
-            <div className="mt-6 text-center text-sm text-zinc-600">{message}</div>
-          )}
-
-          {!loading && ingredients && ingredients.length > 0 && (
-            <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
-              <div>
-                <h3 className="text-lg font-semibold">Detected Ingredients</h3>
-                <IngredientTags items={ingredients} />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold">Recommended Recipe</h3>
-                <RecipeCard data={recipe} imageUrl={imageUrl} />
-              </div>
+        {!loading && ingredients && ingredients.length > 0 && (
+          <div className="mt-4 space-y-4 px-4">
+            <div>
+              <h3 className="text-sm font-semibold">Detected Ingredients</h3>
+              <IngredientTags items={ingredients} />
             </div>
-          )}
 
-          {!loading && (!ingredients || ingredients.length === 0) && (
-            <div className="mt-12 flex items-center justify-center">
-              <div className="max-w-xl rounded-2xl border border-zinc-100 bg-white p-8 text-center shadow-[0_10px_40px_rgba(0,0,0,0.04)]">
-                <div className="text-6xl">🧊</div>
-                <h4 className="mt-4 text-xl font-semibold">Upload your first fridge photo to get personalized recipes.</h4>
-                <p className="mt-2 text-sm text-zinc-600">SmartBite will scan for ingredients and suggest recipes tailored to what you already have.</p>
-              </div>
+            <div>
+              <h3 className="text-sm font-semibold">Recommended Recipe</h3>
+              <RecipeCard data={recipe} imageUrl={imageUrl} />
             </div>
-          )}
-        </main>
-      </div>
+          </div>
+        )}
+
+        {!loading && (!ingredients || ingredients.length === 0) && (
+          <div className="mt-6 px-4">
+            <div className="card p-6 text-center">
+              <div className="text-5xl">🧊</div>
+              <h4 className="mt-4 text-lg font-semibold">Upload your first fridge photo to get personalized recipes.</h4>
+              <p className="mt-2 text-sm text-zinc-600">SmartBite will scan for ingredients and suggest recipes tailored to what you already have.</p>
+            </div>
+          </div>
+        )}
+      </main>
+
+      <BottomNav />
     </div>
   );
 }
