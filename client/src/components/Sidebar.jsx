@@ -20,7 +20,7 @@ export default function Sidebar() {
   return (
     <aside className="w-72 border-r border-zinc-100 bg-white px-6 py-8">
       <div className="flex items-center gap-3">
-        <div className="h-10 w-10 rounded-xl bg-yellow-400 flex items-center justify-center font-semibold">SB</div>
+        <img src="/SmartBite.png" alt="SmartBite" className="h-10 w-10 rounded-md object-cover" />
         <div>
           <div className="text-lg font-semibold">SmartBite</div>
           <div className="text-sm text-zinc-500">Smarter meals. Less waste.</div>

@@ -19,7 +19,10 @@ export default function HomePage() {
       </div>
 
       <header className="relative z-20 mx-auto flex max-w-7xl items-center justify-between px-6 py-6 sm:px-8 lg:px-10">
-        <div className="text-lg font-semibold tracking-tight">SmartBite</div>
+        <div className="flex items-center gap-3">
+          <img src="/SmartBite.png" alt="SmartBite" className="h-10 w-10 rounded-md object-cover" />
+          <div className="text-lg font-semibold tracking-tight">SmartBite</div>
+        </div>
         <nav className="flex items-center gap-3">
           <Link to="/login">
             <Button variant="outline" className="px-5 py-2.5">Login</Button>

@@ -42,7 +42,10 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-white px-6 py-10 text-black sm:px-8 lg:px-10">
       <div className="mx-auto flex max-w-6xl items-center justify-between">
-        <Link to="/" className="text-lg font-semibold tracking-tight">SmartBite</Link>
+        <Link to="/" className="flex items-center gap-3">
+          <img src="/SmartBite.png" alt="SmartBite" className="h-8 w-8 rounded-md object-cover" />
+          <span className="text-lg font-semibold tracking-tight">SmartBite</span>
+        </Link>
       </div>
 
       <div className="mx-auto flex min-h-[calc(100vh-120px)] max-w-5xl items-center justify-center">
